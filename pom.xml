@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.logonedigital</groupId>
 	<artifactId>pilot</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>pilot</name>
 	<description> Application de Gestion des Projets Pédagogiques (PIL - Projet Intégré LogoneDigital Ongoing Trackeing) </description>
 	<url/>
@@ -158,6 +158,9 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>
+			sms-api
+		</finalName>
 	</build>
 
 </project>

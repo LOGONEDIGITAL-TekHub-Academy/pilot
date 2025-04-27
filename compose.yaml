@@ -1,9 +1,58 @@
 services:
+  # ---------------------------
+  # PostgreSQL
+  # ---------------------------
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:16.0'
+    container_name: postgres-pilot
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: pilot_db
     ports:
-      - '5432'
+      - '5432:5432' # Host:5432 → Container:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - pilot-network
+    restart: unless-stopped
+  # ---------------------------
+  # PGADMIN
+  # ---------------------------
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-pilot
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_LISTEN_PORT: 80
+      PGADMIN_SERVER_PREFIX: '/pgadmin'
+    ports:
+      - "15432:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - pilot-network
+  # ---------------------------
+  # Mail Dev
+  # ---------------------------
+  mail-dev:
+    container_name: mail-dev-pilot
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+
+
+
+networks:
+  pilot-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin_data:
