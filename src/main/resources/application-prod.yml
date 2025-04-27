@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ep-wild-block-a4nnfphl-pooler.us-east-1.aws.neon.tech:5432/sms-db?&sslmode=require
+    username: neondb_owner
+    password: npg_Yrx0f7HKUVsp
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl_auto: update
+    show_sql: true
+    properties:
+      hibernate:
+        format-sql: true
+    open-in-view: false
+  mail:
+    host: smtp.gmail.com
+    port: 465 #587
+    username: tpkdmta@gmail.com
+    password: gujjhsmjknbgygoo
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: "*"
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+        debug: true
+        starttls:
+          enable: true
+    protocol: smtp
+frontend:
+  url: "*"
+application:
+  file:
+    reports-dir: reports
+  security:
+    jwt:
+      secret-key: 36541236987412589632587412563214569874563211mySecretKeyGenerator78
+      expiration: 86400000

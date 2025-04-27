@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pilot_db
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl_auto: update
+    show_sql: true
+    properties:
+      hibernate:
+        format-sql: true
+  mail:
+    host: localhost
+    port: 1025
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: false  # Disable auth unless you configured MailDev with credentials
+        starttls:
+          enable: false  # MailDev usually doesn't support TLS in local dev
+
+application:
+  security:
+    jwt:
+      secret-key: 36541236987412589632587412563214569874563211mySecretKeyGenerator78
+      expiration: 86400000

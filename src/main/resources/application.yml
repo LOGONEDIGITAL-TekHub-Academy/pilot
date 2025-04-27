@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: pilot
+server:
+  servlet:
+    context-path: /api/
+  port: 8081
