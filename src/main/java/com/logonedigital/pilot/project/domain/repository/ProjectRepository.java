@@ -1,8 +1,16 @@
 package com.logonedigital.pilot.project.domain.repository;
 
 import com.logonedigital.pilot.project.domain.aggregate.Project;
+import com.logonedigital.pilot.project.domain.vo.PublicId;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface ProjectRepository {
 
-    void save(Project project);
+    Project save(Project project);
+
+    Optional<Project> findByPublicId(PublicId publicId);
+
+    List<Project> findAll();
 }

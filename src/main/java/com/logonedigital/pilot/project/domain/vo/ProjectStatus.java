@@ -6,10 +6,10 @@ public record ProjectStatus(String value) {
     public static final String CREATED = "CREATED";
     public static final String IN_PROGRESS = "IN_PROGRESS";
     public static final String VALIDATED = "VALIDATED";
-    public static final String DONE = "DONE";
+    public static final String COMPLETED = "COMPLETED";
 
     public ProjectStatus {
-        if(!List.of(CREATED, IN_PROGRESS,VALIDATED, DONE).contains(value)) {
+        if(!List.of(CREATED, IN_PROGRESS,VALIDATED, COMPLETED).contains(value)) {
             throw new IllegalArgumentException("Invalid status");
         }
     }
