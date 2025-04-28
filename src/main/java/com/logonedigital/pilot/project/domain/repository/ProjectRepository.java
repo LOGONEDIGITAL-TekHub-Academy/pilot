@@ -13,4 +13,6 @@ public interface ProjectRepository {
     Optional<Project> findByPublicId(PublicId publicId);
 
     List<Project> findAll();
+
+    void deleteByPublicId(PublicId publicId);
 }

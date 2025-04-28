@@ -14,7 +14,13 @@ public class InMemoryProjectRepository implements ProjectRepository {
     @Override
     public Project save(Project project) {
         Optional<Project> existingProject = findByPublicId(project.getPublicId());
-        existingProject.ifPresent(value -> projects.remove(value));
+        if (existingProject.isPresent()) {
+            Project existing = existingProject.get();
+            existing.setTitle(project.getTitle());
+            existing.setDescription(project.getDescription());
+            existing.setStatus(project.getStatus());
+            return existing;
+        }
         projects.add(project);
         return project;
     }
@@ -22,12 +28,17 @@ public class InMemoryProjectRepository implements ProjectRepository {
     @Override
     public Optional<Project> findByPublicId(PublicId publicId) {
         return projects.stream()
-                .filter(project -> project.getPublicId().equals(publicId))
+                .filter(project -> project.getPublicId().value().equals(publicId.value()))
                 .findFirst();
     }
 
     @Override
     public List<Project> findAll() {
         return new ArrayList<>(projects);
+    }
+
+    @Override
+    public void deleteByPublicId(PublicId publicId) {
+        projects.removeIf(project -> project.getPublicId().value().equals(publicId.value()));
     }
 }
