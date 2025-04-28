@@ -11,6 +11,7 @@ spring:
     properties:
       hibernate:
         format-sql: true
+    open-in-view: false
   mail:
     host: localhost
     port: 1025

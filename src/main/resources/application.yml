@@ -5,5 +5,16 @@ spring:
     name: pilot
 server:
   servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
     context-path: /api/
   port: 8081
+
+
+logging:
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: INFO
+    com.logonedigital.pilot: INFO
