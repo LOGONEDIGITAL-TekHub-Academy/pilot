@@ -5,8 +5,8 @@ import com.logonedigital.pilot.project.domain.repository.ProjectRepository;
 import com.logonedigital.pilot.project.domain.vo.ProjectDescription;
 import com.logonedigital.pilot.project.domain.vo.ProjectStatus;
 import com.logonedigital.pilot.project.domain.vo.ProjectTitle;
-import com.logonedigital.pilot.project.domain.vo.PublicId;
 import com.logonedigital.pilot.project.unit.InMemoryProjectRepository;
+import com.logonedigital.pilot.shared.domain.PublicId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -59,7 +59,7 @@ class ProjectManagementFeatureTest {
         @DisplayName("Should not allow duplicate project IDs")
         void shouldPreventDuplicateProjectIds() {
             // Given
-            PublicId publicId = new PublicId(UUID.randomUUID());
+            PublicId publicId = PublicId.fromUuid(UUID.randomUUID());
             Project project1 = createTestProject(publicId, "Project 1", "Description 1");
             Project project2 = createTestProject(publicId, "Project 2", "Description 2");
 
@@ -111,7 +111,7 @@ class ProjectManagementFeatureTest {
         @DisplayName("Should return empty when project not found")
         void shouldReturnEmptyWhenProjectNotFound() {
             // Given
-            PublicId nonExistentId = new PublicId(UUID.randomUUID());
+            PublicId nonExistentId = PublicId.fromUuid(UUID.randomUUID());
 
             // When
             Optional<Project> foundProject = projectRepository.findByPublicId(nonExistentId);
@@ -190,7 +190,7 @@ class ProjectManagementFeatureTest {
         @DisplayName("Should not fail when deleting non-existent project")
         void shouldNotFailWhenDeletingNonExistentProject() {
             // Given
-            PublicId nonExistentId = new PublicId(UUID.randomUUID());
+            PublicId nonExistentId =  PublicId.fromUuid(UUID.randomUUID());
 
             // When & Then (should not throw exception)
             assertDoesNotThrow(() -> projectRepository.deleteByPublicId(nonExistentId));
@@ -200,7 +200,7 @@ class ProjectManagementFeatureTest {
     // Helper methods
     private Project createTestProject(String title, String description) {
         return Project.builder()
-                .publicId(new PublicId(UUID.randomUUID()))
+                .publicId(PublicId.fromUuid(UUID.randomUUID()))
                 .title(new ProjectTitle(title))
                 .description(new ProjectDescription(description))
                 .status(new ProjectStatus(ProjectStatus.CREATED))

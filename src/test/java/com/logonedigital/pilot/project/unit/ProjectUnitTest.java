@@ -5,7 +5,7 @@ import com.logonedigital.pilot.project.domain.repository.ProjectRepository;
 import com.logonedigital.pilot.project.domain.vo.ProjectDescription;
 import com.logonedigital.pilot.project.domain.vo.ProjectStatus;
 import com.logonedigital.pilot.project.domain.vo.ProjectTitle;
-import com.logonedigital.pilot.project.domain.vo.PublicId;
+import com.logonedigital.pilot.shared.domain.PublicId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +27,7 @@ public class ProjectUnitTest {
         projectRepository = new InMemoryProjectRepository();
 
         testProject = Project.builder()
-                .publicId(new PublicId(UUID.randomUUID()))
+                .publicId(PublicId.fromUuid(UUID.randomUUID()))
                 .title(new ProjectTitle("Test Project"))
                 .description(new ProjectDescription("Test Description"))
                 .status(new ProjectStatus(ProjectStatus.CREATED))
@@ -66,7 +66,7 @@ public class ProjectUnitTest {
         Project project1 = projectRepository.save(testProject);
 
         Project project2 = Project.builder()
-                .publicId(new PublicId(UUID.randomUUID()))
+                .publicId(PublicId.fromUuid(UUID.randomUUID()))
                 .title(new ProjectTitle("Second Project"))
                 .description(new ProjectDescription("Second Description"))
                 .status(new ProjectStatus(ProjectStatus.IN_PROGRESS))

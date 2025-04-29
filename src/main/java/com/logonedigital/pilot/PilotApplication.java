@@ -14,7 +14,7 @@ public class PilotApplication {
 	public static void main(String[] args) {
 		try {
 			SpringApplication.run(PilotApplication.class, args);
-			logger.info("APPLICATION SUCCESSFULLY STARTED ON PORT: 8081");
+			logger.info("APPLICATION SUCCESSFULLY STARTED ON PORT: 8900");
 		} catch (Exception e) {
 			logger.error("ERROR WHILE STARTING APPLICATION: {}", e.getMessage(), e);
 			throw e;
