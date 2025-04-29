@@ -32,7 +32,7 @@ spring:
           enable: true
     protocol: smtp
 frontend:
-  url: "*"
+  url: "http://localhost:4200"
 application:
   file:
     reports-dir: reports
