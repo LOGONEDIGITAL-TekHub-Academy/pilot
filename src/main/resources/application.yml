@@ -10,7 +10,7 @@ server:
       max-file-size: 100MB
       max-request-size: 100MB
     context-path: /api/
-  port: 8081
+  port: 8900
 
 
 logging:

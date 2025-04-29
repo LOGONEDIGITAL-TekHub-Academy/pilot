@@ -2,7 +2,6 @@ package com.logonedigital.pilot.project.unit;
 
 import com.logonedigital.pilot.project.domain.aggregate.Project;
 import com.logonedigital.pilot.project.domain.repository.ProjectRepository;
-import com.logonedigital.pilot.project.domain.vo.PublicId;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;

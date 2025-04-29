@@ -5,7 +5,6 @@ import com.logonedigital.pilot.project.domain.repository.ProjectRepository;
 import com.logonedigital.pilot.project.domain.vo.ProjectDescription;
 import com.logonedigital.pilot.project.domain.vo.ProjectStatus;
 import com.logonedigital.pilot.project.domain.vo.ProjectTitle;
-import com.logonedigital.pilot.project.domain.vo.PublicId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

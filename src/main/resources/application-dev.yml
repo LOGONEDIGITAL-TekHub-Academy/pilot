@@ -22,7 +22,8 @@ spring:
         auth: false  # Disable auth unless you configured MailDev with credentials
         starttls:
           enable: false  # MailDev usually doesn't support TLS in local dev
-
+frontend:
+  url: "*"
 application:
   security:
     jwt:

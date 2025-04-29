@@ -1,11 +1,13 @@
 package com.logonedigital.pilot.project.domain.vo;
 
-import com.logonedigital.pilot.shared.error.domain.Assert;
-
 public record ProjectTitle(String value) {
 
-  public ProjectTitle {
-    Assert.notNull("value", value);
-    Assert.field("value", value).minLength(3).maxLength(256);
-  }
+    public ProjectTitle {
+        if (value == null) {
+            throw new IllegalArgumentException("Title value cannot be null");
+        }
+        if (value.length() < 3 || value.length() > 256) {
+            throw new IllegalArgumentException("Title length must be between 3 and 256 characters");
+        }
+    }
 }
