@@ -10,8 +10,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Setter
 @Getter
 @Builder
@@ -24,11 +22,7 @@ public class Project {
     private ProjectDescription description;
     private ProjectStatus status;
     private EventState eventState;
-    /*    private TechDreamer owner;
-    private TechMentor mentor;
-    private List<Task> tasks;
-    private List<Document> documents;
-    private List<Evaluation> evaluations;*/
+
 
     public Project() {}
     public Project(PublicId publicId, ProjectTitle title, ProjectDescription description, ProjectStatus status) {
