@@ -19,7 +19,7 @@ public record PublicId(@NonNull String value) {
         ));
     }
 
-    public UUID toUuid() {
+    public static UUID toUuid(@NonNull String value) {
         return UUID.fromString(
                 new String(Base64.getUrlDecoder().decode(value))
         );
