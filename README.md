@@ -163,6 +163,31 @@ src/
 ## 🏁 Architecture du Projet Spring Boot & Angular
 ![img_8.png](img_8.png)
 
+## 🤝 Contribution
+### Prérequis :
+- Avoir ***docker*** et ***docker compose*** dans votre ordinateur
+- Un IDE IntelliJ Recommended
+### Ce qu'il faut :
+1. **Forkez et/ou Cloner le projet** :
+```
+git clone https://github.com/LOGONEDIGITAL-TekHub-Academy/pilot.git
+```
+2. **Créez une branche (git checkout -b feature/ma-functionality)**
+```
+git checkout -b feature/fonctionnalite
+```
+3. **Commitez vos changements**
+```
+git add [les fichiers modifiés]
+git commit -m "feat(module): actions et explication"
+```
+4. **Poussez vers la branche (git push origin feature/ma-functionality)**
+```
+git push origin feature/fonctionnalite
+```
+5. **Ouvrez une Pull Request sur develop**
+
+
 ## 📄 Licence
 MIT License - Copyright © 2023 LogoneDigital
 ### Points clés ajoutés :
