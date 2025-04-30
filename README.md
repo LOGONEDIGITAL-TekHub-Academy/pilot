@@ -1,7 +1,7 @@
 # 🚀 PIL Ongoing Tracking (PILOT)
 
 **Plateforme de suivi pédagogique des projets de fin de formation**  
-*(Pour LogoneDigital et autres centres de formation)*
+*(Pour LOGONEDIGITAL TekHub Academy et possiblement autres centres de formation)*
 
 ## 📌 Description
 Solution complète basée sur les principes du **Domain-Driven Design (DDD)** et une **architecture hexagonale** pour :
