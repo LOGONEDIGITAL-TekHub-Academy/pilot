@@ -1,5 +1,6 @@
 package com.logonedigital.pilot.project.domain.aggregate;
 
+import com.logonedigital.pilot.project.domain.enums.EventState;
 import com.logonedigital.pilot.project.domain.vo.ProjectDescription;
 import com.logonedigital.pilot.project.domain.vo.ProjectStatus;
 import com.logonedigital.pilot.project.domain.vo.ProjectTitle;
@@ -22,6 +23,7 @@ public class Project {
     private ProjectTitle title;
     private ProjectDescription description;
     private ProjectStatus status;
+    private EventState eventState;
     /*    private TechDreamer owner;
     private TechMentor mentor;
     private List<Task> tasks;
@@ -35,9 +37,4 @@ public class Project {
         this.status = status;
         this.description = description;
     }
-
-    public void initDefaultFields() {
-        this.publicId = PublicId.fromUuid(UUID.randomUUID());
-    }
-
 }

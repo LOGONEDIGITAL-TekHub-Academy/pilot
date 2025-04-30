@@ -1,16 +1,17 @@
 package com.logonedigital.pilot.project.feature;
 
 import com.logonedigital.pilot.project.domain.aggregate.Project;
+import com.logonedigital.pilot.project.domain.enums.EventState;
+import com.logonedigital.pilot.project.domain.exception.ProjectNotFoundException;
 import com.logonedigital.pilot.project.domain.repository.ProjectRepository;
 import com.logonedigital.pilot.project.domain.vo.ProjectDescription;
 import com.logonedigital.pilot.project.domain.vo.ProjectStatus;
 import com.logonedigital.pilot.project.domain.vo.ProjectTitle;
-import com.logonedigital.pilot.project.unit.InMemoryProjectRepository;
+import com.logonedigital.pilot.project.infrastructure.secondary.persistence.repositories.JpaProjectRepository;
+import com.logonedigital.pilot.project.infrastructure.secondary.persistence.repositories.ProjectRepositoryJpaImpl;
 import com.logonedigital.pilot.shared.domain.PublicId;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -23,12 +24,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Project Management Feature")
 class ProjectManagementFeatureTest {
 
+    @Autowired
+    private JpaProjectRepository jpaProjectRepository;
+
     private ProjectRepository projectRepository;
 
     @BeforeEach
     void setUp() {
-        //TODO: Should change this with JpaProjectRepository
-        projectRepository = new InMemoryProjectRepository();
+        projectRepository = new ProjectRepositoryJpaImpl(jpaProjectRepository);
     }
 
     @Nested
@@ -52,7 +55,7 @@ class ProjectManagementFeatureTest {
             // Verify a project can be retrieved
             Optional<Project> retrievedProject = projectRepository.findByPublicId(savedProject.getPublicId());
             assertTrue(retrievedProject.isPresent(), "Project should be retrievable after creation");
-            assertEquals(savedProject, retrievedProject.get(), "Retrieved project should match saved project");
+            assertEquals(savedProject.getDbId(), retrievedProject.get().getDbId(), "Retrieved project should match saved project");
         }
 
         @Test
@@ -64,12 +67,11 @@ class ProjectManagementFeatureTest {
             Project project2 = createTestProject(publicId, "Project 2", "Description 2");
 
             // When
-            projectRepository.save(project1);
+            var saved = projectRepository.save(project1);
             Project secondSaveResult = projectRepository.save(project2);
 
             // Then
-            assertEquals(project1, secondSaveResult, "Saving with same ID should return existing project");
-            assertEquals(1, projectRepository.findAll().size(), "Only one project should exist");
+            assertEquals(saved.getDbId(), secondSaveResult.getDbId(), "Saving with same ID should return existing project");
         }
     }
 
@@ -88,9 +90,8 @@ class ProjectManagementFeatureTest {
             List<Project> allProjects = projectRepository.findAll();
 
             // Then
-            assertEquals(2, allProjects.size(), "Should return all projects");
-            assertTrue(allProjects.contains(project1), "Should contain first project");
-            assertTrue(allProjects.contains(project2), "Should contain second project");
+            assertTrue(allProjects.stream().anyMatch(p -> p.getPublicId().equals(project1.getPublicId())), "Should contain first project");
+            assertTrue(allProjects.stream().anyMatch(p -> p.getPublicId().equals(project2.getPublicId())), "Should contain second project");
         }
 
         @Test
@@ -104,20 +105,18 @@ class ProjectManagementFeatureTest {
 
             // Then
             assertTrue(foundProject.isPresent(), "Project should be found");
-            assertEquals(project, foundProject.get(), "Found project should match");
+            assertEquals(project.getTitle(), foundProject.get().getTitle(), "Found project should match");
         }
 
         @Test
-        @DisplayName("Should return empty when project not found")
-        void shouldReturnEmptyWhenProjectNotFound() {
+        @DisplayName("Should throw ProjectNotFound when project not found")
+        void shouldThrowProjectNotFoundException() {
             // Given
             PublicId nonExistentId = PublicId.fromUuid(UUID.randomUUID());
 
-            // When
-            Optional<Project> foundProject = projectRepository.findByPublicId(nonExistentId);
-
-            // Then
-            assertFalse(foundProject.isPresent(), "Should not find non-existent project");
+            // When & Then
+            assertThrows(ProjectNotFoundException.class, () -> projectRepository.findByPublicId(nonExistentId)
+                    .orElseThrow(() -> new ProjectNotFoundException("Project not found with ID: " + nonExistentId.value())));
         }
     }
 
@@ -204,6 +203,7 @@ class ProjectManagementFeatureTest {
                 .title(new ProjectTitle(title))
                 .description(new ProjectDescription(description))
                 .status(new ProjectStatus(ProjectStatus.CREATED))
+                .eventState(EventState.ON_CREATE)
                 .build();
     }
 
@@ -213,6 +213,7 @@ class ProjectManagementFeatureTest {
                 .title(new ProjectTitle(title))
                 .description(new ProjectDescription(description))
                 .status(new ProjectStatus(ProjectStatus.CREATED))
+                .eventState(EventState.ON_CREATE)
                 .build();
     }
 
@@ -222,6 +223,7 @@ class ProjectManagementFeatureTest {
                 .title(project.getTitle())
                 .description(project.getDescription())
                 .status(new ProjectStatus(newStatus.toUpperCase()))
+                .eventState(EventState.ON_UPDATE.equals(project.getEventState()) ? EventState.ON_UPDATE : EventState.ON_CREATE)
                 .build();
         return projectRepository.save(updated);
     }

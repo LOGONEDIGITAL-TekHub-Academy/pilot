@@ -7,11 +7,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserRepositoryImpl implements UserRepository {
+public class UserRepositoryJpaImpl implements UserRepository {
 
     private final JpaUserRepository jpaUserRepository;
 
-    public UserRepositoryImpl(JpaUserRepository jpaUserRepository) {
+    public UserRepositoryJpaImpl(JpaUserRepository jpaUserRepository) {
         this.jpaUserRepository = jpaUserRepository;
     }
 
